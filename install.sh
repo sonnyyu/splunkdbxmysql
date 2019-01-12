@@ -5,6 +5,11 @@ set -x
 exec > >(sudo tee install.log)
 exec 2>&1
 
+INSTALL_SPLUNK=1
+INSTALL_JAVA=1
+INSTALL_DBX=1
+INSTALL_MYSQL=1
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 if [[ "$INSTALL_SPLUNK" == "1" ]]; then
