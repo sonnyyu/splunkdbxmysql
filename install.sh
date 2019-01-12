@@ -16,7 +16,7 @@ cd /opt/splunk/bin
 ./splunk restart
 fi
 
-if [[ "$INSTALL_SPLUNK" == "1" ]]; then
+if [[ "$INSTALL_JAVA" == "1" ]]; then
 sudo apt-get update -y && sudo apt-get upgrade  -y
 sudo add-apt-repository ppa:webupd8team/java  -y
 sudo apt-get update -y
@@ -29,7 +29,7 @@ source /etc/environment
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 fi
 
-if [[ "$INSTALL_SPLUNK" == "1" ]]; then
+if [[ "$INSTALL_DBX" == "1" ]]; then
 cd /opt/splunk/bin
 wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
 ./splunk install app splunk-db-connect_314.tgz
@@ -38,7 +38,7 @@ cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
 fi
 
-if [[ "$INSTALL_SPLUNK" == "1" ]]; then
+if [[ "$INSTALL_MYSQL" == "1" ]]; then
 # define database connectivity
 _db="world"
 _db_user="root"
