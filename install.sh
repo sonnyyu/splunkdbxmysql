@@ -9,6 +9,7 @@ INSTALL_SPLUNK=1
 INSTALL_JAVA=1
 INSTALL_DBX=1
 INSTALL_MYSQL=1
+PLUNK_PASSWORD="Pass2w0rd~"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -16,7 +17,7 @@ if [[ "$INSTALL_SPLUNK" == "1" ]]; then
 wget -O splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.2.3&product=splunk&filename=splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb&wget=true'
 dpkg -i splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb
 cd /opt/splunk/bin
-./splunk start --accept-license
+./splunk start --accept-license --answer-yes --no-prompt --seed-passwd ${PLUNK_PASSWORD}
 ./splunk enable boot-start
 ./splunk restart
 fi
