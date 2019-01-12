@@ -9,7 +9,8 @@ INSTALL_SPLUNK=1
 INSTALL_JAVA=1
 INSTALL_DBX=1
 INSTALL_MYSQL=1
-PLUNK_PASSWORD="Pass2w0rd~"
+PLUNK_PASSWORD="password"
+UNINSTALL_MYSQL=0
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -62,6 +63,18 @@ sudo systemctl restart mysql.service
 sudo mysql -u${_db_user} -p${_db_password}  < ${_db_sample_file}
 sudo systemctl restart mysql.service
 fi
+
+if [[ "$UNINSTALL_MYSQL" == "1" ]]; then
+sudo systemctl stop mysql.service
+sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+sudo rm -rf /etc/mysql
+sudo rm -rf /var/lib/mysql
+sudo rm -rf /var/lib/mysql-keyring
+sudo rm -rf /var/lib/mysql-files
+fi
+
 
 echo "completed"
 exit
