@@ -55,6 +55,7 @@ wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
 cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
 
+mkdir -p /opt/splunk/etc/apps/splunk_app_db_connect/local
 #cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/identities.conf
 #[root]
 #disabled = 0
