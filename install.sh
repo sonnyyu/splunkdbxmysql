@@ -29,31 +29,30 @@ source /etc/environment
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 fi
 
+if [[ "$INSTALL_SPLUNK" == "1" ]]; then
 cd /opt/splunk/bin
 wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
 ./splunk install app splunk-db-connect_314.tgz
 ./splunk restart
-
 cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
+fi
 
+if [[ "$INSTALL_SPLUNK" == "1" ]]; then
 # define database connectivity
 _db="world"
 _db_user="root"
 _db_password="password"
 _db_sample_file="world.sql"
-
 cd ${DIR}
-
 wget https://www.dropbox.com/s/j39s3baatjgf6c8/world.sql
-
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server || exit 1
 sudo mysqladmin -u root password ${_db_password} || exit 1
 sudo mysql -u${_db_user} -p  -e "ALTER USER '${_db_user}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${_db_password}';"
 sudo systemctl restart mysql.service
-
 sudo mysql -u${_db_user} -p${_db_password}  < ${_db_sample_file}
 sudo systemctl restart mysql.service
+fi
 
 echo "completed"
 exit
