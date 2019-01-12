@@ -52,7 +52,6 @@ _db_sample_file="world.sql"
 cd ${DIR}
 wget https://www.dropbox.com/s/j39s3baatjgf6c8/world.sql
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server || exit 1
-sudo mysqladmin -u root password ${_db_password} || exit 1
 sudo mysql -u${_db_user} -p  -e "ALTER USER '${_db_user}'@'localhost' IDENTIFIED WITH mysql_native_password BY '${_db_password}';"
 sudo systemctl restart mysql.service
 sudo mysql -u${_db_user} -p${_db_password}  < ${_db_sample_file}
