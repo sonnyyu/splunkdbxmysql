@@ -54,6 +54,29 @@ wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
 ./splunk restart
 cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
+
+cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/identities.conf
+[root]
+disabled = 0
+password = U2FsdGVkX1+0/vH7kO/ah3+gmob9Ij4R2MXHgLB0TmQ=
+use_win_auth = 0
+username = root
+EOF
+
+cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/db_connections.conf
+[mysql]
+connection_type = mysql
+database = world
+disabled = 0
+host = localhost
+identity = root
+jdbcUseSSL = false
+localTimezoneConversionEnabled = false
+port = 3306
+readonly = false
+timezone = America/Los_Angeles
+EOF
+
 fi
 
 if [[ "$UNINSTALL_MYSQL" == "1" ]]; then
@@ -82,6 +105,7 @@ sudo mysql -u${_db_user} -p${_db_password}  -e "ALTER USER '${_db_user}'@'localh
 sudo systemctl restart mysql.service
 sudo mysql -u${_db_user} -p${_db_password}  < ${_db_sample_file}
 sudo systemctl restart mysql.service
+
 fi
 
 echo "completed"
