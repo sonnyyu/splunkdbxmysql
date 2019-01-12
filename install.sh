@@ -7,26 +7,27 @@ exec 2>&1
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+if [[ "$INSTALL_SPLUNK" == "1" ]]; then
 wget -O splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.2.3&product=splunk&filename=splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb&wget=true'
 dpkg -i splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb
 cd /opt/splunk/bin
 ./splunk start --accept-license
 ./splunk enable boot-start
 ./splunk restart
+fi
 
+if [[ "$INSTALL_SPLUNK" == "1" ]]; then
 sudo apt-get update -y && sudo apt-get upgrade  -y
 sudo add-apt-repository ppa:webupd8team/java  -y
 sudo apt-get update -y
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
-
 sudo apt-get install oracle-java8-installer -y
-
 #sudo update-alternatives --config java
-
 echo 'JAVA_HOME="/usr/lib/jvm/java-8-oracle"' >>/etc/environment
 source /etc/environment
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+fi
 
 cd /opt/splunk/bin
 wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
