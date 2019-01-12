@@ -40,8 +40,9 @@ fi
 if [[ "$UNINSTALL_DBX" == "1" ]]; then
 cd /opt/splunk/bin
 ./splunk remove app  splunk_app_db_connect -auth admin:${PLUNK_PASSWORD}
+
+rm -rf /opt/splunk/etc/apps/splunk_app_db_connect
 ./splunk restart
-rm -rf /opt/splunk/etc/apps/splunk_app_db_connect/drivers/mysql-connector-java-8.0.13.jar
 fi
 
 
