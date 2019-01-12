@@ -38,7 +38,8 @@ fi
 if [[ "$INSTALL_DBX" == "1" ]]; then
 cd /opt/splunk/bin
 wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
-./splunk install app splunk-db-connect_314.tgz
+./splunk install app splunk-db-connect_314.tgz -auth 'admin:${PLUNK_PASSWORD}'
+
 ./splunk restart
 cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
