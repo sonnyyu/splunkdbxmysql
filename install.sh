@@ -55,13 +55,15 @@ wget https://www.dropbox.com/s/djjn9to4b4r3fy6/splunk-db-connect_314.tgz
 cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
 
-cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/identities.conf
-[root]
-disabled = 0
-password = U2FsdGVkX1+0/vH7kO/ah3+gmob9Ij4R2MXHgLB0TmQ=
-use_win_auth = 0
-username = root
-EOF
+#cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/identities.conf
+#[root]
+#disabled = 0
+#password = U2FsdGVkX1+0/vH7kO/ah3+gmob9Ij4R2MXHgLB0TmQ=
+#use_win_auth = 0
+#username = root
+#EOF
+
+curl -k -X POST -u admin:password https://localhost:8089/servicesNS/nobody/splunk_app_db_connect/db_connect/dbxproxy/identities -d "{\"name\":\"root\",\"username\":\"root\",\"password\":\"password\"}"
 
 cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/db_connections.conf
 [mysql]
@@ -76,6 +78,9 @@ port = 3306
 readonly = false
 timezone = America/Los_Angeles
 EOF
+
+cd /opt/splunk/bin
+./splunk restart
 
 fi
 
