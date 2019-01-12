@@ -47,6 +47,17 @@ cd /opt/splunk/etc/apps/splunk_app_db_connect/drivers/
 wget https://www.dropbox.com/s/gpardxaqelw136t/mysql-connector-java-8.0.13.jar
 fi
 
+if [[ "$UNINSTALL_MYSQL" == "1" ]]; then
+sudo systemctl stop mysql.service
+sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+sudo rm -rf /etc/mysql
+sudo rm -rf /var/lib/mysql
+sudo rm -rf /var/lib/mysql-keyring
+sudo rm -rf /var/lib/mysql-files
+fi
+
 if [[ "$INSTALL_MYSQL" == "1" ]]; then
 # define database connectivity
 _db="world"
@@ -63,18 +74,6 @@ sudo systemctl restart mysql.service
 sudo mysql -u${_db_user} -p${_db_password}  < ${_db_sample_file}
 sudo systemctl restart mysql.service
 fi
-
-if [[ "$UNINSTALL_MYSQL" == "1" ]]; then
-sudo systemctl stop mysql.service
-sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
-sudo apt-get autoremove -y
-sudo apt-get autoclean
-sudo rm -rf /etc/mysql
-sudo rm -rf /var/lib/mysql
-sudo rm -rf /var/lib/mysql-keyring
-sudo rm -rf /var/lib/mysql-files
-fi
-
 
 echo "completed"
 exit
