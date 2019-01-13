@@ -66,7 +66,7 @@ mkdir -p /opt/splunk/etc/apps/splunk_app_db_connect/local
 #EOF
 sleep 40
 
-curl -k -X POST -u admin:password https://localhost:8089/servicesNS/nobody/splunk_app_db_connect/db_connect/dbxproxy/identities -d "{\"name\":\"root\",\"username\":\"root\",\"password\":\"password\"}"
+curl -k -X POST -u admin:${PLUNK_PASSWORD} https://localhost:8089/servicesNS/nobody/splunk_app_db_connect/db_connect/dbxproxy/identities -d "{\"name\":\"root\",\"username\":\"root\",\"password\":\"password\"}"
 
 cat << EOF > /opt/splunk/etc/apps/splunk_app_db_connect/local/db_connections.conf
 [mysql]
