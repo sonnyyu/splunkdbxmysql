@@ -16,7 +16,9 @@ UNINSTALL_DBX=1
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 if [[ "$INSTALL_SPLUNK" == "1" ]]; then
+if [ ! -f splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb ]; then
 wget -O splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.2.3&product=splunk&filename=splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb&wget=true'
+fi
 dpkg -i splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb
 cd /opt/splunk/bin
 ./splunk start --accept-license --answer-yes --no-prompt --seed-passwd ${PLUNK_PASSWORD}
@@ -67,7 +69,8 @@ mkdir -p /opt/splunk/etc/apps/splunk_app_db_connect/local
 #use_win_auth = 0
 #username = root
 #EOF
-sleep 40
+
+#sleep 40
 
 curl -k -X POST -u admin:${PLUNK_PASSWORD} https://localhost:8089/servicesNS/nobody/splunk_app_db_connect/db_connect/dbxproxy/identities -d "{\"name\":\"root\",\"username\":\"root\",\"password\":\"password\"}"
 
