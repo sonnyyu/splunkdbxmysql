@@ -21,6 +21,9 @@ dpkg -i splunk-7.2.3-06d57c595b80-linux-2.6-amd64.deb
 cd /opt/splunk/bin
 ./splunk start --accept-license --answer-yes --no-prompt --seed-passwd ${PLUNK_PASSWORD}
 ./splunk enable boot-start
+systemctl daemon-reload
+echo "QUICKDRAW_URL=0" >>/opt/splunk/etc/splunk-launch.conf
+kill `ps -ef | grep splunkd | egrep -v grep | awk '{print $2}'`
 ./splunk restart
 fi
 
